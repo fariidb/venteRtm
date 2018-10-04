@@ -1,3 +1,98 @@
+<?php
+require 'database.php';
+
+$nameError = $descriptionError = $priceError = $categoryError = $imageError = $name = $description = $price = $category = $image = "";
+
+if (!empty($_POST))
+{
+    $name = checkInput($_POST['name']);
+    $description = checkInput($_POST['description']);
+    $price = checkInput($_POST['price']);
+    $category = checkInput($_POST['category']);
+    $image = checkInput($_FILES['image']['name']);
+    $imagePath = '../img/' .basename($image);
+    $imageExtension = pathinfo($imagePath, PATHINFO_EXTENSION);
+    $isSuccess = true;
+    $isUploadSuccess = false;
+
+    if(empty($name))
+    {
+        $nameError = 'Ce champ ne peut pas être vide';
+        $isSuccess = false;
+    }
+    if(empty($description))
+    {
+        $descriptionError = 'Ce champ ne peut pas être vide';
+        $isSuccess = false;
+    }
+    if(empty($price))
+    {
+        $priceError = 'Ce champ ne peut pas être vide';
+        $isSuccess = false;
+    }
+    if(empty($category))
+    {
+        $categoryError = 'Ce champ ne peut pas être vide';
+        $isSuccess = false;
+    }
+    if(empty($image))
+    {
+        $imageError = 'Ce champ ne peut pas être vide';
+        $isSuccess = false;
+    }
+    else
+    {
+        $isUploadSuccess = true;
+//        Quel sont les extensions autorisé ?
+        if ($imageExtension != "jpg" && $imageExtension !="png" && $imageExtension !="jpeg" && $imageExtension !="gif")
+        {
+            $imageError = "Les fichiers autorises sont: .jpg, .jpeg, .png, .gif";
+            $isUploadSuccess = false;
+        }
+//        est ce que l'image existe deja ?
+        if(file_exists($imagePath))
+        {
+            $imageError = "le fichier existe deja";
+            $isUploadSuccess = false;
+        }
+//        Qu'elle est la taille maximum autorisé ?
+        if ($_FILES["image"]["size"] > 500000)
+        {
+            $imageError = "le fichier ne doit pas depasser les 500KB";
+            $isUploadSuccess = false;
+        }
+//        est ce que le transfert de l'image à etait transfert avec sucess ?
+        if ($isUploadSuccess)
+        {
+            if (!move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath))
+            {
+                $imageError = "Il y a eu une erreur lors de l'upload";
+                $isUploadSuccess = false;
+            }
+        }
+    }
+// Vérifier qu'il y a pas eu de probleme pour les autres champs du formulaire
+    if ($isSuccess && $isUploadSuccess)
+    {
+        $db = Database::connect();
+        $statement = $db->prepare("INSERT INTO items (name,description,price,category,image) values(?, ?, ?, ?, ?)");
+        $statement->execute(array($name,$description,$price,$category,$image));
+        Database::disconnect();
+        header("Location: index.php");
+    }
+
+}
+
+
+
+function checkInput($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+?>
 <!doctype html>
 <html>
 <head>
@@ -19,27 +114,48 @@
 
         <h1><strong>Ajouter un items </strong></h1>
         <br>
-        <form action="">
+        <form class="form" role="form" action="insert.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="">Nom:</label><?php echo ' '. $item['name']; ?>
+                <label for="name">Nom:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="nom" value="<?php echo $name; ?> ">
+                <span class="help-inline"><?php echo $nameError; ?></span>
             </div>
             <div class="form-group">
-                <label for="">Description: </label><?php echo ' '. $item['description']; ?>
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="<?php echo $description; ?> ">
+                <span class="help-inline"><?php echo $descriptionError; ?></span>
             </div>
             <div class="form-group">
-                <label for="">Prix: </label><?php echo ' '. number_format((float)$item["price"],2,'.',''). ' €'; ?>
+                <label for="price">Prix: (en €)</label>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Prix" value="<?php echo $price; ?> ">
+                <span class="help-inline"><?php echo $priceError; ?></span>
             </div>
             <div class="form-group">
-                <label for="">Catégorie: </label><?php echo ' '. $item['category']; ?>
+                <label for="category">Catégorie:</label>
+                <select class="form-control" id="category" name="category">
+
+                <?php
+                    $db = Database::connect();
+                    foreach ($db->query('SELECT * FROM categories') as $row)
+                    {
+                        echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                    }
+                    Database::disconnect();
+                ?>
+                </select>
+                    <span class="help-inline"><?php echo $categoryError; ?></span>
             </div>
             <div class="form-group">
-                <label for="">Image: </label><?php echo ' '. $item['image']; ?>
+                <label for="">Selectionner une image: </label>
+                <input type="file" id="image" name="image">
+                <span class="help-inline"><?php echo $imageError; ?></span>
             </div>
-        </form>
         <br>
         <div class="form_actions">
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Ajouter</button>
             <a class="btn btn-primary" href="index.php"><span class="glyphicon glyphicon-arrow-left"></span> Retour</a>
         </div>
+        </form>
 
 
     </div>
