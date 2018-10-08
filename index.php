@@ -10,8 +10,13 @@
     <link href="https://fonts.googleapis.com/css?family=Holtwood+One+SC" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 <div class="container site">
+ <div class="form_actions">
+     <a class="btn btn-success" href="./inscription/connexion.php">Connexion</a>
+       <a class="btn btn-primary" href="./inscription">Inscription</a>
+        </div>
     <h1 class="text-logo"><span class="glyphicon glyphicon-cutlery"></span> Burger Code Hallal <span class="glyphicon glyphicon-cutlery"></span></h1>
     <?php
     require 'admin/database.php';
@@ -34,6 +39,8 @@
 
     echo '</ul>
             </nav>';
+
+
 
     echo '<div class="tab-content">';
 

@@ -1,6 +1,7 @@
 <?php
 require 'database.php';
 
+
 if (!empty($_GET['id']))
 {
     $id =checkInput($_GET['id']);
@@ -23,6 +24,8 @@ function checkInput($data)
     $data = htmlspecialchars($data);
     return $data;
 }
+
+
 ?>
 <!doctype html>
 <html>

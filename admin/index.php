@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Burger Code</title>
+    <title>Administration Burger</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width:device-width, initial-scale:1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -13,10 +13,15 @@
 
 <body>
 <h1 class="text-logo"><span class="glyphicon glyphicon-cutlery"></span> Burger Code Hallal <span class="glyphicon glyphicon-cutlery"></span></h1>
+<h1 class="text-logo"> Administration </h1>
 
 <div class="container admin">
     <div class="row">
-        <h1><strong>Liste des items </strong><a href="insert.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></h1>
+        <h1><strong>Liste des items </strong>
+            <a href="insert.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+            <a href="../index.php" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Voir la boutique</a>
+        </h1>
+
 
         <table class="table table-striped table-bordered">
             <thead>
