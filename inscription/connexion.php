@@ -74,7 +74,7 @@
 
                 <!--                Email-->
                 <div class="mb-3">
-                    <label for="email">Email </label>
+                    <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
                 </div>
                 <br>
@@ -84,11 +84,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Ex: ******" required>
                 </div>
                 <br>
-                <label class="btn btn-secondary">
-                    <input type="checkbox"> Connexion automatique
-                </label>
-                <br>
-                <br>
+
                 <div class="form_actions">
                     <button type="submit" class="btn btn-primary"> Connexion</button>
                     <a class="btn btn-danger" href="../index.php"> retour</a>

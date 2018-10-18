@@ -98,45 +98,48 @@ require ('../admin/database.php');
                 <form method="post" action="index.php">
                         <!--Pseudo-->
                         <div class="mb-3">
-                            <label for="pseudo">Pseudo</label>
-                            <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Pseudo" required>
+                            <label for="pseudo">Pseudo <span class="red">*</span></label>
+                            <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Votre pseudo" required>
                         </div>
                         <br>
                         <!--Nom-->
                         <div class="mb-3">
-                            <label for="name">Nom</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Nom" required>
+                            <label for="name">Nom <span class="red">*</span></label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Votre nom" required>
                         </div>
                         <br>
                         <!--Prénom-->
                         <div class="mb-3">
-                            <label for="firstName">Prénom</label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Prenom" required>
+                            <label for="firstName">Prénom <span class="red">*</span></label>
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Votre prénom" required>
                         </div>
                         <br>
                         <!--Email-->
                         <div class="mb-3">
-                            <label for="email">Email </label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com" required>
+                            <label for="email">Email <span class="red">*</span></label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="exemple@email.com" required>
                         </div>
                         <br>
                         <!--Password -->
                         <div class="mb-3">
-                            <label for="password">Mot de passe</label>
+                            <label for="password">Mot de passe <span class="red">*</span></label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="Ex: ******" required>
                         </div>
                         <br>
                         <!--confirmation Password -->
                         <div class="mb-3">
-                            <label for="password_confirm">Confirmation du mot de passe</label>
+                            <label for="password_confirm">Confirmation du mot de passe <span class="red">*</span></label>
                             <input type="password" class="form-control" name="password_confirm" id="password_confirm" required>
                         </div>
-                    <br>
+                        <br>
+                        <div class="col-md-12">
+                            <p class="red"><strong>* Ces informations sont requises</strong></p>
+                        </div>
 
-                    <div class="form_actions ">
-                        <button type="submit" class="btn btn-success"> Valider</button>
-                        <a class="btn btn-danger" href="index.php"> Annuler</a>
-                    </div>
+                        <div class="form_actions ">
+                            <button type="submit" class="btn btn-success"> Valider</button>
+                            <a class="btn btn-danger" href="../index.php"> Annuler</a>
+                        </div>
                 </form>
             <br>
             <p> Déjà inscrit ? <a href="connexion.php"> Connectez-vous</a></p>
