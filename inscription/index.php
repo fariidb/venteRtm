@@ -3,9 +3,8 @@ session_start();
 
 require ('../admin/database.php');
 
-    if (!empty($_POST['pseudo']) && !empty($_POST['name']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password_confirm']))
+    if (!empty($_POST['name']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password_confirm']))
     {
-        $pseudo           = $_POST['pseudo'];
         $name             = $_POST['name'];
         $firstName        = $_POST['firstName'];
         $email            = $_POST['email'];
@@ -36,16 +35,12 @@ require ('../admin/database.php');
 
 //       Envoi du formulaire dans la DB
 
-        // Hash
-        $secret = sha1($email).time();
-        $secret = sha1($secret).time().time();
-
         // Cryptage du Password (grain de sable)
-        $password = "aq1".sha1($password. "1234")."25";
+        $password = sha1($password);
 
         // envoi de la requete
-        $req = $db->prepare("INSERT INTO users(pseudo, name, firstName, email, password, secret) VALUES(?, ?, ?, ?, ?, ?)");
-        $req->execute(array($pseudo, $name, $firstName, $email, $password, $secret));
+        $req = $db->prepare("INSERT INTO users(name, firstName, email, password, secret) VALUES(?, ?, ?, ?, ?)");
+        $req->execute(array($name, $firstName, $email, $password, $secret));
         header('location: ./?success=1');
 
 
@@ -71,7 +66,6 @@ require ('../admin/database.php');
     <div class="container admin">
         <div class="row">
             <div class="col-sm-12">
-            <h1 class="text-center" ><strong>INFORMATION</strong></h1>
                 <?php
                 if (!isset($_SESSION['connect']))
                 { ?>
@@ -96,12 +90,6 @@ require ('../admin/database.php');
             }
             ?>
                 <form method="post" action="index.php">
-                        <!--Pseudo-->
-                        <div class="mb-3">
-                            <label for="pseudo">Pseudo <span class="red">*</span></label>
-                            <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Votre pseudo" required>
-                        </div>
-                        <br>
                         <!--Nom-->
                         <div class="mb-3">
                             <label for="name">Nom <span class="red">*</span></label>
@@ -144,7 +132,7 @@ require ('../admin/database.php');
             <br>
             <p> Déjà inscrit ? <a href="connexion.php"> Connectez-vous</a></p>
                 <?php } else{ ?>
-                <h1 class="text-center" ><strong>Bonjour <?= $_SESSION['pseudo'] ?> </strong></h1>
+                <h1 class="text-center" ><strong>Bonjour <?= $_SESSION['firstname'] ?> </strong></h1>
                 <a href="../index.php" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Voir la boutique</a>
                 <?php }?>
             </div>

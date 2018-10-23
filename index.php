@@ -1,3 +1,6 @@
+<?php
+session_start()
+?>
 <!doctype html>
 <html>
 <head>
@@ -13,14 +16,14 @@
 
 <body>
 <div class="container site">
-
+<!-- Connexion - inscription - deconnexion-->
     <div class="form_actions">
         <a class="btn btn-success" href="./inscription/connexion.php">Connexion</a>
         <a class="btn btn-primary" href="./inscription">Inscription</a>
         <a class="btn btn-danger" href="./inscription/deconnexion.php">Déconnecter</a>
      </div>
 
-    <h1 class="text-logo"><span class="glyphicon glyphicon-cutlery"></span> Burger Code Hallal <span class="glyphicon glyphicon-cutlery"></span></h1>
+    <h1 class="text-logo"><span class="glyphicon glyphicon-cutlery"></span> Burger Hallal code <span class="glyphicon glyphicon-cutlery"></span></h1>
 
     <?php
     require 'admin/database.php';

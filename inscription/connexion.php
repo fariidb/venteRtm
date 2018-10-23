@@ -59,7 +59,6 @@
 <div class="container admin">
     <div class="row">
             <div class="col-sm-12">
-            <h1 class="text-center" ><strong>INFORMATION</strong></h1>
                 <?php
                 if (isset($_GET['error']))
                 {
